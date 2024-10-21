@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.*;
+import java.util.Random;
 
 /**
  * Class BouncingBall - a graphical ball that observes the effect of gravity. The ball
@@ -18,7 +19,7 @@ import java.awt.geom.*;
 
 public class BouncingBall
 {
-    private static final int GRAVITY = 3;  // effect of gravity
+    private static final int GRAVITY = 0;  // effect of gravity
 
     private int ballDegradation = 2;
     private Ellipse2D.Double circle;
@@ -28,8 +29,13 @@ public class BouncingBall
     private int yPosition;
     private final int groundPosition;      // y position of ground
     private Canvas canvas;
-    private int ySpeed = 1;                // initial downward speed
-
+    private int ySpeed = 1;     // initial downward speed
+    private int xSpeed = 1;
+    private int boxTop;       //Private into to set the size of the box
+    private int boxBottom;      //Private into to set the size of the box
+    private int boxLeft;
+    private int boxRight;
+    
     /**
      * Constructor for objects of class BouncingBall
      *
@@ -41,7 +47,7 @@ public class BouncingBall
      * @param drawingCanvas  the canvas to draw this ball on
      */
     public BouncingBall(int xPos, int yPos, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
+                        int groundPos, Canvas drawingCanvas, int top, int bottom, int right, int left)
     {
         xPosition = xPos;
         yPosition = yPos;
@@ -49,6 +55,20 @@ public class BouncingBall
         diameter = ballDiameter;
         groundPosition = groundPos;
         canvas = drawingCanvas;
+        boxLeft = left;
+        boxRight = right;
+        boxTop = top;
+        boxBottom = bottom;
+        
+        
+        Random ran = new Random();
+        do {
+            xSpeed = ran.nextInt(15) - 7;
+            ySpeed = ran.nextInt(15) - 7;
+        } 
+        while (xSpeed == 0 || ySpeed == 0);
+        
+        
     }
 
     /**
@@ -77,14 +97,15 @@ public class BouncingBall
         erase();
             
         // compute new position
-        ySpeed += GRAVITY;
         yPosition += ySpeed;
-        xPosition +=2;
+        xPosition += xSpeed;
 
         // check if it has hit the ground
-        if (yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+        if (yPosition <= boxRight || yPosition >= (boxLeft - diameter)) {
+            ySpeed = -ySpeed;}
+            
+        if (xPosition <= boxBottom || xPosition >= (boxTop - diameter)) {
+            xSpeed = -xSpeed;
         }
 
         // draw again at new position
