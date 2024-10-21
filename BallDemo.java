@@ -28,7 +28,7 @@ public class BallDemo
     /**
      * Simulate two bouncing balls
      */
-    public void bounce(int coloredBalls)
+    public void boxBounce(int coloredBalls)
     {
         if (coloredBalls <10 || coloredBalls >50) {
             System.out.print("There should be between 10 and 50 balls!");
@@ -39,7 +39,7 @@ public class BallDemo
 
         // draw the ground
         myCanvas.setForegroundColor(Color.BLACK);
-        int boxRight = 200;
+        int boxRight = 100;
         int boxTop = 400;
         int boxLeft = 50;
         int boxBottom = 450;
