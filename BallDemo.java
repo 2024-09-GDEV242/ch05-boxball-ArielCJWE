@@ -39,18 +39,18 @@ public class BallDemo
 
         // draw the ground
         myCanvas.setForegroundColor(Color.BLACK);
-        int boxRight = 50;
+        int boxRight = 200;
         int boxTop = 400;
         int boxLeft = 50;
         int boxBottom = 450;
         
-        myCanvas.drawLine(boxRight, boxLeft, boxRight + boxBottom, boxLeft);
+        myCanvas.drawLine(boxLeft, boxTop, boxRight, boxTop);
         
-        myCanvas.drawLine(boxRight, boxLeft, boxRight, boxLeft + boxTop);
+        myCanvas.drawLine(boxLeft, boxTop, boxLeft, boxBottom);
         
-        myCanvas.drawLine(boxRight + boxBottom, boxLeft, boxRight + boxBottom, boxLeft + boxTop);
+        myCanvas.drawLine(boxRight, boxTop, boxRight, boxBottom);
         
-        myCanvas.drawLine(boxRight, boxLeft + boxTop, boxRight + boxBottom, boxLeft + boxBottom);
+        myCanvas.drawLine(boxLeft, boxBottom, boxRight, boxBottom);
         
         BouncingBall[] balls = new BouncingBall[coloredBalls];
         
@@ -58,12 +58,12 @@ public class BallDemo
         for (int b = 0; b < coloredBalls; b++ ){
             int xPos = rands.nextInt(boxRight - boxLeft - 20) + boxLeft;
             int yPos = rands.nextInt(boxBottom - boxTop - 20) + boxTop;
-            int diameter = rands.nextInt(15) + 10;
+            int diameter = rands.nextInt(10) + 5;
             //Randomizing the color based on odd and even. If it is even then green
             //if it is odd then red
             Color color = (b % 2 == 0)? Color.GREEN : Color.RED;
             
-            balls[b] = (new BouncingBall(xPos, yPos, diameter, color, myCanvas, boxTop, boxRight, boxLeft, boxBottom));
+            balls[b] = new BouncingBall(xPos, yPos, diameter, color,200, myCanvas, boxTop, boxRight, boxLeft, boxBottom);
         }
         
         // make them bounce
