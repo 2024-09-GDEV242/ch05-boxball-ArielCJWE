@@ -1,12 +1,12 @@
 #BlueJ package file
-dependency1.from=BouncingBall
+dependency1.from=BallDemo
 dependency1.to=Canvas
 dependency1.type=UsesDependency
 dependency2.from=BallDemo
-dependency2.to=Canvas
+dependency2.to=BoxBall
 dependency2.type=UsesDependency
-dependency3.from=BallDemo
-dependency3.to=BouncingBall
+dependency3.from=BoxBall
+dependency3.to=Canvas
 dependency3.type=UsesDependency
 editor.fx.0.height=727
 editor.fx.0.width=697
@@ -41,7 +41,7 @@ target1.width=110
 target1.x=110
 target1.y=50
 target2.height=60
-target2.name=BouncingBall
+target2.name=BoxBall
 target2.naviview.expanded=true
 target2.showInterface=false
 target2.type=ClassTarget

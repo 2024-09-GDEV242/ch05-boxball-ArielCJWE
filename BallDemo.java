@@ -1,6 +1,4 @@
 import java.awt.Color;
-import java.util.Random;
-import java.util.ArrayList;
 
 
 /**
@@ -14,7 +12,6 @@ import java.util.ArrayList;
 public class BallDemo   
 {
     private Canvas myCanvas;
-    private Random rands;
 
     /**
      * Create a BallDemo object. Creates a fresh canvas and makes it visible.
@@ -22,7 +19,6 @@ public class BallDemo
     public BallDemo()
     {
         myCanvas = new Canvas("Ball Demo", 600, 500);
-        rands = new Random();
     }
 
     /**
@@ -30,19 +26,21 @@ public class BallDemo
      */
     public void boxBounce(int coloredBalls)
     {
-        if (coloredBalls <10 || coloredBalls >50) {
-            System.out.print("There should be between 10 and 50 balls!");
+        if (coloredBalls <10 || coloredBalls >100) {
+            System.out.print("There should be between 10 and 100 balls!");
             return;
         }
   
         myCanvas.setVisible(true);
-
-        // draw the ground
-        myCanvas.setForegroundColor(Color.BLACK);
-        int boxRight = 100;
-        int boxTop = 400;
+        
+        //setting box boundaries
+        int boxRight = 550;
+        int boxTop = 50;
         int boxLeft = 50;
-        int boxBottom = 450;
+        int boxBottom = 400;
+        
+        // draw the ground
+        myCanvas.setForegroundColor(Color.BLUE);
         
         myCanvas.drawLine(boxLeft, boxTop, boxRight, boxTop);
         
@@ -52,26 +50,31 @@ public class BallDemo
         
         myCanvas.drawLine(boxLeft, boxBottom, boxRight, boxBottom);
         
-        BouncingBall[] balls = new BouncingBall[coloredBalls];
-        
+        //Creating an array for the balls
+        BoxBall[] halloballs = new BoxBall[coloredBalls];
         // create and show the balls
         for (int b = 0; b < coloredBalls; b++ ){
-            int xPos = rands.nextInt(boxRight - boxLeft - 20) + boxLeft;
-            int yPos = rands.nextInt(boxBottom - boxTop - 20) + boxTop;
-            int diameter = rands.nextInt(10) + 5;
+            Color color = (b % 2 == 0) ? Color.BLACK: Color.YELLOW;
             //Randomizing the color based on odd and even. If it is even then green
             //if it is odd then red
-            Color color = (b % 2 == 0)? Color.GREEN : Color.RED;
-            
-            balls[b] = new BouncingBall(xPos, yPos, diameter, color,200, myCanvas, boxTop, boxRight, boxLeft, boxBottom);
+            halloballs[b] = new BoxBall (20, color, boxLeft, boxRight, boxTop, boxBottom);
         }
         
-        // make them bounce
-        boolean finished =  false;
-        while (!finished) {
+        while (true) {
             myCanvas.wait(50); // small delay
-             for(BouncingBall ball : balls){
-                 ball.move();
+             for(BoxBall ball : halloballs){
+                 ball.move(myCanvas);
+                 
+                 //Setting it so that the canvas redraws itself when the balls hit the walls
+                myCanvas.setForegroundColor(Color.BLUE);
+        
+                myCanvas.drawLine(boxLeft, boxTop, boxRight, boxTop);
+        
+                myCanvas.drawLine(boxLeft, boxTop, boxLeft, boxBottom);
+        
+                myCanvas.drawLine(boxRight, boxTop, boxRight, boxBottom);
+        
+                myCanvas.drawLine(boxLeft, boxBottom, boxRight, boxBottom);
              }
             
             }
